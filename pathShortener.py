@@ -21,6 +21,11 @@ def get_system_environment() -> dict:
                     break
     except Exception as e:
         print(f"Błąd podczas odczytu rejestru: {e}")
+
+    system_root = os.getenv('SystemRoot')
+    if system_root != None:
+        env_vars["SystemRoot"] = os.getenv('SystemRoot')
+        
     return env_vars
 
 def get_system_path() -> str:
@@ -30,7 +35,7 @@ def get_system_path() -> str:
     return value
 
 def parametrize_path(path_string: str, env_vars: dict) -> str:
-    """Zamienia sztywne ścieżki na zmienne systemowe, np. C:\\Windows -> %SystemRoot%."""
+    """Zamienia sztywne ścieżki na zmienne systemowe, np. C:\\Windows -> %SystemRoot% i C:\\WINDOWS -> %SystemRoot%"""
     entries = path_string.split(";")
     new_entries = []
 
